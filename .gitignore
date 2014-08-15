@@ -1,0 +1,17 @@
+# Python compiled files
+
+*.pyc
+*.pyo
+
+# window database files
+
+*.db
+
+# wing IDE project file
+
+*.wpr
+*.wpu
+
+# pyCharm project file
+
+*.idea

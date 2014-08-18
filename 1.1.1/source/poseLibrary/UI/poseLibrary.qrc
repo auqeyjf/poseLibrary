@@ -1,0 +1,12 @@
+<RCC>
+  <qresource prefix="icon">
+    <file>icons/star.png</file>
+    <file>icons/delete.png</file>
+    <file>icons/camera.png</file>
+    <file>icons/create.png</file>
+    <file>icons/setting.png</file>
+    <file>icons/reload.png</file>
+    <file>icons/bgi.png</file>
+    <file>icons/sync.png</file>
+  </qresource>
+</RCC>

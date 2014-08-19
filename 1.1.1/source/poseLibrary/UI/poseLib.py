@@ -4,7 +4,7 @@
 #   date: Fri, 15 Aug 2014 09:59:45
 #========================================
 import os.path, math, poseLibrary.PoseLibEnv
-from FoleyUtils import scriptTool, uiTool
+from utils import scriptTool, uiTool
 from PyQt4 import QtCore, QtGui
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 class ListModel(QtCore.QAbstractListModel):
@@ -105,7 +105,8 @@ class PoseLib(baseClass, windowClass):
         charcters = os.listdir(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH)
         self.__model_character.changeData(charcters)
         
-        
+
+
     def on_LSV_Character_clicked(self):
         if self.LSV_Character.selectedIndexes() == []:
             return

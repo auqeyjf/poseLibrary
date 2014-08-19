@@ -438,8 +438,27 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuAsset">
+    <property name="title">
+     <string>Assets</string>
+    </property>
+    <addaction name="actionAdd_Character"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdd"/>
+   </widget>
+   <addaction name="menuAsset"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAdd_Character">
+   <property name="text">
+    <string>Add Character</string>
+   </property>
+  </action>
+  <action name="actionAdd">
+   <property name="text">
+    <string>Add Class</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="poseLibrary.qrc"/>

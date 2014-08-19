@@ -47,7 +47,7 @@ class TableModel(QtCore.QAbstractTableModel):
     
     
     def data(self, index, role):
-        if role == QtCore.Qt.DisplayRole or role == QtCore.Qt.ToolTipRole:
+        if role == QtCore.Qt.DisplayRole:
             i = index.row() * self.columnCount() + index.column()
             if i < len(self.__data):
                 return self.__data[i]

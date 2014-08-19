@@ -3,14 +3,14 @@
 #   mail: zclongpop@163.com
 #   date: Fri, 15 Aug 2014 09:59:45
 #========================================
-import os.path, math
+import os.path, math, poseLibrary.PoseLibEnv
 from FoleyUtils import scriptTool, uiTool
 from PyQt4 import QtCore, QtGui
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 class ListModel(QtCore.QAbstractListModel):
     def __init__(self, parent=None):
         super(ListModel, self).__init__(parent)
-        self.__data = ['TempCharacterA', 'TempCharacterB']
+        self.__data = ['1','2','3']
     
     
     def rowCount(self, index):
@@ -28,6 +28,7 @@ class ListModel(QtCore.QAbstractListModel):
         self.__data = L
         self.endRemoveRows()    
 
+
     def getData(self, index):
         return self.data(index, QtCore.Qt.DisplayRole)
     
@@ -35,7 +36,7 @@ class ListModel(QtCore.QAbstractListModel):
 class TableModel(QtCore.QAbstractTableModel):
     def __init__(self, parent=None):
         super(TableModel, self).__init__(parent)
-        self.__data = [1,2,3,4,5,6,7,8,9, 10, 11, 121, 13]
+        self.__data = []
     
     def columnCount(self, index=QtCore.QModelIndex()):
         return 3
@@ -99,27 +100,33 @@ class PoseLib(baseClass, windowClass):
         self.show()
     
 
-    def __refeshPose(self):
-        if self.LSV_Character.selectedIndexes() == []:
-            return
-        if self.LSV_PoseType.selectedIndexes() == []:
-            return
-        
-        #character = self.__model_character.getData(self.LSV_Character.selectedIndexes()[0])
-        #poseType  = self.__model_poseType.getData(self.LSV_PoseType.selectedIndexes()[0])
-        
-        #- refresh data
-        self.__model_pose.clear()
-        self.__model_pose.updateData(range(100))
-        
-        #- set row height
-        for i in range(self.__model_pose.rowCount()):
-            self.LSV_Pose.setRowHeight(i, 134)
+    def on_btn_refreshCharacters_clicked(self, args=None):
+        if args == None:return
+        charcters = os.listdir(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH)
+        self.__model_character.changeData(charcters)
         
         
     def on_LSV_Character_clicked(self):
-        self.__refeshPose()
+        if self.LSV_Character.selectedIndexes() == []:
+            return
+        path = os.path.join(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH, self.__model_character.getData(self.LSV_Character.selectedIndexes()[0]))
+        if not os.path.isdir(path):
+            return
+        self.__model_poseType.changeData(os.listdir(path))
+        
 
 
     def on_LSV_PoseType_clicked(self):
-        self.__refeshPose()
+        if self.LSV_PoseType.selectedIndexes() == []:
+            return
+        
+        posePath = os.path.join(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH, 
+                                 self.__model_character.getData(self.LSV_Character.selectedIndexes()[0]),
+                                 self.__model_poseType.getData(self.LSV_PoseType.selectedIndexes()[0])
+                                 )
+        poseFiles = os.listdir(posePath)
+        self.__model_pose.clear()
+        self.__model_pose.updateData(poseFiles)
+        #- set row height
+        for i in range(self.__model_pose.rowCount()):
+            self.LSV_Pose.setRowHeight(i, 134)        

@@ -1,4 +1,10 @@
-# explort and import animation data 
+'''
+explort and import animation data 
+
+Author : Jiangjishi
+
+
+'''
 import maya.cmds as cmds
 import sys
 

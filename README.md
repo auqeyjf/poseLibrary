@@ -5,5 +5,5 @@ if path not in sys.path:
     sys.path.append(path)
 
 
-from poseLibrary.UI import poseLibrary
-poseLibrary.PoseLib()
+from poseLibrary.UI import poseLib
+poseLib.PoseLib()

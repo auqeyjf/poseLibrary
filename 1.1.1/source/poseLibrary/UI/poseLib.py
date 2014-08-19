@@ -47,7 +47,7 @@ class TableModel(QtCore.QAbstractTableModel):
     
     
     def data(self, index, role):
-        if role == QtCore.Qt.DisplayRole:
+        if role == QtCore.Qt.DisplayRole or role == QtCore.Qt.ToolTipRole:
             i = index.row() * self.columnCount() + index.column()
             if i < len(self.__data):
                 return self.__data[i]
@@ -119,12 +119,12 @@ class PoseLib(baseClass, windowClass):
     def on_LSV_PoseType_clicked(self):
         if self.LSV_PoseType.selectedIndexes() == []:
             return
+        character = self.__model_character.getData(self.LSV_Character.selectedIndexes()[0])
+        poseType = self.__model_poseType.getData(self.LSV_PoseType.selectedIndexes()[0])
+        posePath = os.path.join(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH, character, poseType)
         
-        posePath = os.path.join(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH, 
-                                 self.__model_character.getData(self.LSV_Character.selectedIndexes()[0]),
-                                 self.__model_poseType.getData(self.LSV_PoseType.selectedIndexes()[0])
-                                 )
-        poseFiles = os.listdir(posePath)
+        poseFiles = [os.path.join(posePath, f) for f in os.listdir(posePath)]
+
         self.__model_pose.clear()
         self.__model_pose.updateData(poseFiles)
         #- set row height

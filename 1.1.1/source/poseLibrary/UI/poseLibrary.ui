@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>PoseLibraryWindow</class>
+ <widget class="QMainWindow" name="PoseLibraryWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Pose Library</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="2,1,7">
@@ -283,6 +283,40 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
+           <widget class="QPushButton" name="pushButton_9">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+	border:none;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="poseLibrary.qrc">
+              <normaloff>:/icon/icons/apply.png</normaloff>:/icon/icons/apply.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="pushButton_5">
             <property name="minimumSize">
              <size>
@@ -429,36 +463,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>860</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuAsset">
-    <property name="title">
-     <string>Assets</string>
-    </property>
-    <addaction name="actionAdd_Character"/>
-    <addaction name="separator"/>
-    <addaction name="actionAdd"/>
-   </widget>
-   <addaction name="menuAsset"/>
-  </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionAdd_Character">
-   <property name="text">
-    <string>Add Character</string>
-   </property>
-  </action>
-  <action name="actionAdd">
-   <property name="text">
-    <string>Add Class</string>
-   </property>
-  </action>
  </widget>
  <resources>
   <include location="poseLibrary.qrc"/>

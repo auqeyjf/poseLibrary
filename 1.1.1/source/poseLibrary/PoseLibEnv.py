@@ -4,4 +4,4 @@
 #   date: Tue, 19 Aug 2014 15:44:09
 #========================================
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-ROOT_CHARACTER_PATH = 'E:/Documents/GitHub/poseLibrary/1.1.1/resource/character'
+ROOT_CHARACTER_PATH = 'E:/foley/poseLibrary/1.1.1/resource/character'

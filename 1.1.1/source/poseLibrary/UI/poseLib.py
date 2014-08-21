@@ -214,11 +214,20 @@ class PoseLib(baseClass, windowClass):
     def on_btn_apply_clicked(self, args=None):
         if args == None:return
         print 2
+    
                 
     def on_btn_create_clicked(self, args=None):
         if args == None:return
-        print 3
-                
+        Menu = QtGui.QMenu()
+        Menu.move(QtGui.QCursor.pos())
+        Menu.addAction('Add New Character...')
+        Menu.addSeparator()
+        Menu.addAction('Add New Pose Type...')
+        Menu.addSeparator()
+        Menu.addAction('Add New Pose...')
+        Menu.exec_()
+
+
     def on_btn_grabImage_clicked(self, args=None):
         if args == None:return
         print 4

@@ -7,8 +7,11 @@ import re, os.path, poseLibrary.PoseLibEnv
 from utils import scriptTool, uiTool
 from PyQt4 import QtCore, QtGui
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+#======================================================
+
 SCRIPT_PATH = scriptTool.getScriptPath()
 
+#======================================================
 
 class ListModel(QtCore.QAbstractListModel):
     def __init__(self, parent=None):
@@ -74,6 +77,7 @@ class TableModel(QtCore.QAbstractTableModel):
 
     def updateData(self, L):
         for i in range(0, len(L), 3):
+            #- [[1, 2, 3], [4, 5, 6], [7, None, None]]
             x = []
             for s in range(3):
                 index = i + s
@@ -81,7 +85,7 @@ class TableModel(QtCore.QAbstractTableModel):
                     x.append(L[index])
                 else:
                     x.append(None)
-            
+            #- insert
             self.beginInsertRows(QtCore.QModelIndex(), i / 3, i / 3)
             self.__data.append(x)
             self.endInsertRows()
@@ -116,8 +120,12 @@ class PoseDelegate(QtGui.QItemDelegate):
 
 
 
-baseClass, windowClass = uiTool.loadUi(os.path.join(scriptTool.getScriptPath(), 'poseLibrary.ui'))
+baseClass, windowClass = uiTool.loadUi(os.path.join(SCRIPT_PATH, 'poseLibrary.ui'))
 class PoseLib(baseClass, windowClass):
+    
+    ROOT_PATH = poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH
+    CHARACTER = None
+    POSE_TYPE = None
     
     def __init__(self, parent=uiTool.getMayaWindow()):
         super(PoseLib, self).__init__(parent)
@@ -145,9 +153,9 @@ class PoseLib(baseClass, windowClass):
 
     def on_btn_refreshCharacters_clicked(self, args=None):
         if args == None:return
-        os.chdir(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH)
+        os.chdir(self.ROOT_PATH)
         #-
-        charcters = [d for d in os.listdir(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH) if os.path.isdir(d)]
+        charcters = [d for d in os.listdir(self.ROOT_PATH) if os.path.isdir(d)]
         #-
         self.__model_character.changeData(charcters)
         self.__model_pose.clear()
@@ -158,8 +166,9 @@ class PoseLib(baseClass, windowClass):
         selectedChara = self.LSV_Character.selectedIndexes()
         if selectedChara == []:
             return
+        self.CHARACTER =  self.__model_character.getData(selectedChara[0])
         #-
-        path = os.path.join(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH, self.__model_character.getData(selectedChara[0]))
+        path = os.path.join(self.ROOT_PATH, self.CHARACTER)
         os.chdir(path)
         poseTypes = [d for d in os.listdir(path) if os.path.isdir(d)]
         #-
@@ -169,16 +178,13 @@ class PoseLib(baseClass, windowClass):
 
 
     def on_LSV_PoseType_clicked(self):
-        selectedChara    = self.LSV_Character.selectedIndexes()
         selectedPosetype = self.LSV_PoseType.selectedIndexes()
-        if selectedChara == []:
-            return
         if selectedPosetype == []:
             return
+        self.POSE_TYPE = self.__model_poseType.getData(selectedPosetype[0])
+        
         #-
-        character = self.__model_character.getData(selectedChara[0])
-        poseType = self.__model_poseType.getData(selectedPosetype[0])
-        posePath = os.path.join(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH, character, poseType)
+        posePath = os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE)
         #-
         os.chdir(posePath)
         poseFiles = [f for f in os.listdir(posePath) if re.search('json$', f)]

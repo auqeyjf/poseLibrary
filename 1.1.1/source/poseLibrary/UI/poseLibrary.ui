@@ -305,8 +305,8 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset>
-              <normaloff>:/icon/icons/play_alt.png</normaloff>:/icon/icons/play_alt.png</iconset>
+             <iconset resource="poseLibrary.qrc">
+              <normaloff>:/icon/icons/play.png</normaloff>:/icon/icons/play.png</iconset>
             </property>
             <property name="iconSize">
              <size>

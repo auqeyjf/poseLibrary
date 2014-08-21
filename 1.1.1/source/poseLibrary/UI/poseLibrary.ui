@@ -283,7 +283,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QPushButton" name="pushButton_10">
+           <widget class="QPushButton" name="btn_playBlast">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -317,7 +317,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_9">
+           <widget class="QPushButton" name="btn_apply">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -351,7 +351,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_5">
+           <widget class="QPushButton" name="btn_create">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -385,7 +385,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_6">
+           <widget class="QPushButton" name="btn_grabImage">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -419,7 +419,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_8">
+           <widget class="QPushButton" name="btn_addStar">
             <property name="minimumSize">
              <size>
               <width>30</width>
@@ -456,7 +456,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton_7">
+           <widget class="QPushButton" name="btn_delete">
             <property name="minimumSize">
              <size>
               <width>30</width>

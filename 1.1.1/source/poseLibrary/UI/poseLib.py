@@ -204,5 +204,29 @@ class PoseLib(baseClass, windowClass):
                     continue
                 self.LSV_Pose.openPersistentEditor(index)
         
-        
-        
+    #=================================================================================    
+    #                                  Tool  Bar                                     #
+    #=================================================================================    
+    def on_btn_playBlast_clicked(self, args=None):
+        if args == None:return
+        print 1
+                
+    def on_btn_apply_clicked(self, args=None):
+        if args == None:return
+        print 2
+                
+    def on_btn_create_clicked(self, args=None):
+        if args == None:return
+        print 3
+                
+    def on_btn_grabImage_clicked(self, args=None):
+        if args == None:return
+        print 4
+                
+    def on_btn_addStar_clicked(self, args=None):
+        if args == None:return
+        print 5
+                
+    def on_btn_delete_clicked(self, args=None):
+        if args == None:return
+        print 6  

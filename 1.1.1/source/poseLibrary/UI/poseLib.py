@@ -230,7 +230,11 @@ class PoseLib(baseClass, windowClass):
 
     def on_btn_grabImage_clicked(self, args=None):
         if args == None:return
-        print 4
+        snapShotPath = os.path.join(os.path.dirname(SCRIPT_PATH), 'plug_in', 'SogouSnapShot.exe')
+        if not os.path.isfile(snapShotPath):
+            return 
+        os.popen(snapShotPath)
+                
                 
     def on_btn_addStar_clicked(self, args=None):
         if args == None:return

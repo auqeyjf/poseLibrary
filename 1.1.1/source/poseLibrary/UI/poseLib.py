@@ -58,6 +58,11 @@ class TableModel(QtCore.QAbstractTableModel):
             return self.__data[index.row()][index.column()]
     
     
+    def flags(self, index):
+        if self.__data[index.row()][index.column()] != None:
+            return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+        return QtCore.Qt.ItemIsSelectable
+    
 
     def clear(self):
         for i in reversed(range(self.rowCount())):
@@ -140,47 +145,53 @@ class PoseLib(baseClass, windowClass):
 
     def on_btn_refreshCharacters_clicked(self, args=None):
         if args == None:return
-        charcters = []
-        for d in os.listdir(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH):
-            if not os.path.isdir(os.path.join(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH, d)):
-                continue
-            charcters.append(d)
+        os.chdir(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH)
+        #-
+        charcters = [d for d in os.listdir(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH) if os.path.isdir(d)]
+        #-
         self.__model_character.changeData(charcters)
         self.__model_pose.clear()
 
 
 
     def on_LSV_Character_clicked(self):
-        if self.LSV_Character.selectedIndexes() == []:
+        selectedChara = self.LSV_Character.selectedIndexes()
+        if selectedChara == []:
             return
-        path = os.path.join(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH, self.__model_character.getData(self.LSV_Character.selectedIndexes()[0]))
-        poseTypes = []
-        for d in os.listdir(path):
-            if not os.path.isdir(os.path.join(path, d)):
-                continue
-            poseTypes.append(d)
+        #-
+        path = os.path.join(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH, self.__model_character.getData(selectedChara[0]))
+        os.chdir(path)
+        poseTypes = [d for d in os.listdir(path) if os.path.isdir(d)]
+        #-
         self.__model_poseType.changeData(poseTypes)
         self.__model_pose.clear()
 
 
+
     def on_LSV_PoseType_clicked(self):
-        if self.LSV_PoseType.selectedIndexes() == []:
+        selectedChara    = self.LSV_Character.selectedIndexes()
+        selectedPosetype = self.LSV_PoseType.selectedIndexes()
+        if selectedChara == []:
             return
-        character = self.__model_character.getData(self.LSV_Character.selectedIndexes()[0])
-        poseType = self.__model_poseType.getData(self.LSV_PoseType.selectedIndexes()[0])
+        if selectedPosetype == []:
+            return
+        #-
+        character = self.__model_character.getData(selectedChara[0])
+        poseType = self.__model_poseType.getData(selectedPosetype[0])
         posePath = os.path.join(poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH, character, poseType)
-        
-        poseFiles = [os.path.join(posePath, f) for f in os.listdir(posePath)]
-        poseFiles = [f for f in poseFiles if re.search('json$', f)]
-        
+        #-
+        os.chdir(posePath)
+        poseFiles = [f for f in os.listdir(posePath) if re.search('json$', f)]
+        #-
         self.__model_pose.clear()
         self.__model_pose.updateData(poseFiles)
+        
         #- set row height
         for i in range(self.__model_pose.rowCount()):
             self.LSV_Pose.setRowHeight(i, 134)
         
         for row in range(self.__model_pose.rowCount()):
-            for column in range(self.__model_pose.columnCount()):
+            for column in range(3):
                 index = self.__model_pose.index(row, column)
                 data  = self.__model_pose.data(index, QtCore.Qt.EditRole)
                 if data == None:

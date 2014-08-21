@@ -3,7 +3,7 @@
 #   mail: zclongpop@163.com
 #   date: Fri, 15 Aug 2014 09:59:45
 #========================================
-import re, math, os.path, poseLibrary.PoseLibEnv
+import re, os.path, poseLibrary.PoseLibEnv
 from utils import scriptTool, uiTool
 from PyQt4 import QtCore, QtGui
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
@@ -36,47 +36,50 @@ class ListModel(QtCore.QAbstractListModel):
         return self.data(index, QtCore.Qt.DisplayRole)
     
 
+
 class TableModel(QtCore.QAbstractTableModel):
     def __init__(self, parent=None):
         super(TableModel, self).__init__(parent)
         self.__data = []
     
+    
     def columnCount(self, index=QtCore.QModelIndex()):
         return 3
     
     
+    
     def rowCount(self, index=QtCore.QModelIndex()):
-        return int(math.ceil(len(self.__data) / float(self.columnCount())))
+        return len(self.__data)
+    
     
     
     def data(self, index, role):
         if role == QtCore.Qt.EditRole:
-            i = index.row() * self.columnCount() + index.column()
-            if i < len(self.__data):
-                return self.__data[i]
-            else:
-                return None
+            return self.__data[index.row()][index.column()]
     
     
-    
+
     def clear(self):
         for i in reversed(range(self.rowCount())):
             self.beginRemoveRows(QtCore.QModelIndex(), i, i)
-            del self.__data[i * self.columnCount():]
+            self.__data.pop(i)
             self.endRemoveRows()
 
 
 
     def updateData(self, L):
-        for i, data in enumerate(L):
-            if i % self.columnCount() == 0:
-                self.beginInsertRows(QtCore.QModelIndex(), i, i)
+        for i in range(0, len(L), 3):
+            x = []
+            for s in range(3):
+                index = i + s
+                if index < len(L):
+                    x.append(L[index])
+                else:
+                    x.append(None)
             
-            self.__data.append(data)
-            
-            if i % self.columnCount() == 0:
-                self.endInsertRows() 
-
+            self.beginInsertRows(QtCore.QModelIndex(), i / 3, i / 3)
+            self.__data.append(x)
+            self.endInsertRows()
 
 
 class PoseDelegate(QtGui.QItemDelegate):
@@ -95,16 +98,15 @@ class PoseDelegate(QtGui.QItemDelegate):
 
     def getImagePath(self, index):
         imagePath = os.path.join(SCRIPT_PATH, 'icons', 'file_image.png').replace('\\', '/')
+        
         data =  self.parentModel.data(index, QtCore.Qt.EditRole)
-        if not os.path.isfile(data):
-            return imagePath
+        for imgExt in ('.png', '.jpg', '.jpeg', '.bmp'):
+            image = os.path.splitext(data)[0] + imgExt
+            if os.path.isfile(image):
+                image = image.replace('\\', '/')
+                return image
         
-        image = os.path.splitext(data)[0] + '.png'
-        if not os.path.isfile(image):
-            return imagePath
-        
-        image = image.replace('\\', '/')
-        return image
+        return imagePath
 
 
 

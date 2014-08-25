@@ -112,3 +112,13 @@ def readData(filePath):
     f.close()
     
     return data
+
+
+
+def exportKeysBySelect(filePath):
+    sel = mc.ls(sl=True)
+    if len(sel) == 0:
+        return
+    
+    data = getKeyByObjects(sel)
+    writeData(data, filePath)

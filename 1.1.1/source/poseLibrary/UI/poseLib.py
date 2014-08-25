@@ -236,7 +236,7 @@ class PoseLib(baseClass, windowClass):
         filePath = mc.fileDialog2(dir=os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE), ff="JSON Files (*.json)")
         if not filePath:
             return
-        print filePath[0]
+        poseLibrary.core.KeyData.exportKeysBySelect(filePath[0])
         
         
 

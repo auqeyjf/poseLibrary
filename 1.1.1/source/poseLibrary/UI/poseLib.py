@@ -3,9 +3,10 @@
 #   mail: zclongpop@163.com
 #   date: Fri, 15 Aug 2014 09:59:45
 #========================================
-import re, os.path, poseLibrary.PoseLibEnv
+import re, os, poseLibrary.PoseLibEnv, inputDialog
 from utils import scriptTool, uiTool
 from PyQt4 import QtCore, QtGui
+reload(inputDialog)
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 #======================================================
 
@@ -159,7 +160,8 @@ class PoseLib(baseClass, windowClass):
         #-
         self.__model_character.changeData(charcters)
         self.__model_pose.clear()
-
+        #-
+        os.chdir(os.environ['TMP'])
 
 
     def on_LSV_Character_clicked(self):
@@ -174,7 +176,8 @@ class PoseLib(baseClass, windowClass):
         #-
         self.__model_poseType.changeData(poseTypes)
         self.__model_pose.clear()
-
+        #-
+        os.chdir(os.environ['TMP'])
 
 
     def on_LSV_PoseType_clicked(self):
@@ -203,6 +206,9 @@ class PoseLib(baseClass, windowClass):
                 if data == None:
                     continue
                 self.LSV_Pose.openPersistentEditor(index)
+        #-
+        os.chdir(os.environ['TMP'])
+        
         
     #=================================================================================    
     #                                  Tool  Bar                                     #
@@ -241,18 +247,66 @@ class PoseLib(baseClass, windowClass):
     def on_LSV_Character_customContextMenuRequested(self, point):
         Menu = QtGui.QMenu()
         Menu.move(QtGui.QCursor.pos())
-        Menu.addAction('Add New Character...')
+        
+        ma = Menu.addAction('Add New Character...')
+        ma.triggered.connect(self.addCharacter)
+
         Menu.addSeparator()
-        Menu.addAction('Delete Selected Character...')        
+        
+        mb = Menu.addAction('Delete Selected Character...')     
+        mb.triggered.connect(self.deleteCharacter)
+        
         Menu.exec_()
     
     
     def on_LSV_PoseType_customContextMenuRequested(self, point):
         Menu = QtGui.QMenu()
         Menu.move(QtGui.QCursor.pos())
-        Menu.addAction('Add New Style...')
+        
+        ma = Menu.addAction('Add New Style...')
+        ma.triggered.connect(self.addStyle)
+        
         Menu.addSeparator()
-        Menu.addAction('Delete Selected Style...')
+        
+        mb = Menu.addAction('Delete Selected Style...')
+        mb.triggered.connect(self.deleteStyle)
+        
         Menu.exec_()
       
-         
+    def addCharacter(self):
+        ui = inputDialog.InputDialog(self.ROOT_PATH)
+        ui.comboBox.setModel(self.__model_character)
+        ui.exec_()
+    
+    
+    def deleteCharacter(self):
+        selectIndexes = self.LSV_Character.selectedIndexes()
+        if len(selectIndexes) == 0:
+            return
+        
+        if not uiTool.warning('Delete select characters.\nContinue? ? ?', 'w'):
+            return 
+
+        for index in selectIndexes:
+            name = self.__model_character.getData(index)
+            os.removedirs(os.path.join(self.ROOT_PATH, name))
+    
+    
+    def addStyle(self):
+        if self.CHARACTER == None:return
+        ui = inputDialog.InputDialog(os.path.join(self.ROOT_PATH, self.CHARACTER))
+        ui.comboBox.setModel(self.__model_poseType)
+        ui.exec_()
+        
+
+    def deleteStyle(self):
+        selectIndexes = self.LSV_PoseType.selectedIndexes()
+        if len(selectIndexes) == 0:
+            return
+        
+        if not uiTool.warning('Delete select Pose Styles.\nContinue? ? ?', 'w'):
+            return         
+        
+        for index in selectIndexes:
+            name = self.__model_poseType.getData(index)
+            os.removedirs(os.path.join(self.ROOT_PATH, self.CHARACTER, name))        

@@ -3,7 +3,7 @@
 #   mail: zclongpop@163.com
 #   date: Fri, 15 Aug 2014 09:59:45
 #========================================
-import re, os, poseLibrary.PoseLibEnv, inputDialog
+import re, os, poseLibrary.PoseLibEnv, inputDialog, poseLibrary.core.KeyData
 from utils import scriptTool, uiTool
 from PyQt4 import QtCore, QtGui
 import maya.cmds as mc
@@ -225,7 +225,7 @@ class PoseLib(baseClass, windowClass):
             return
         fileName = self.__model_pose.data(selectedIndexes[0], QtCore.Qt.EditRole)
         filePath = os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE, fileName)
-        print filePath      
+        poseLibrary.core.KeyData.setKeyByDatas(poseLibrary.core.KeyData.readData(filePath))
                 
                 
                 

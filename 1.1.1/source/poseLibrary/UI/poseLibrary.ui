@@ -116,6 +116,9 @@
           <pointsize>10</pointsize>
          </font>
         </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::CustomContextMenu</enum>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -262,6 +265,9 @@
             <pointsize>10</pointsize>
            </font>
           </property>
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
           <property name="styleSheet">
            <string notr="true"/>
           </property>
@@ -272,6 +278,9 @@
         </item>
         <item>
          <widget class="QTableView" name="LSV_Pose">
+          <property name="contextMenuPolicy">
+           <enum>Qt::DefaultContextMenu</enum>
+          </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
           </property>

@@ -218,14 +218,7 @@ class PoseLib(baseClass, windowClass):
                 
     def on_btn_create_clicked(self, args=None):
         if args == None:return
-        Menu = QtGui.QMenu()
-        Menu.move(QtGui.QCursor.pos())
-        Menu.addAction('Add New Character...')
-        Menu.addSeparator()
-        Menu.addAction('Add New Pose Type...')
-        Menu.addSeparator()
-        Menu.addAction('Add New Pose...')
-        Menu.exec_()
+        print 3
 
 
     def on_btn_grabImage_clicked(self, args=None):
@@ -243,3 +236,23 @@ class PoseLib(baseClass, windowClass):
     def on_btn_delete_clicked(self, args=None):
         if args == None:return
         print 6  
+    
+    
+    def on_LSV_Character_customContextMenuRequested(self, point):
+        Menu = QtGui.QMenu()
+        Menu.move(QtGui.QCursor.pos())
+        Menu.addAction('Add New Character...')
+        Menu.addSeparator()
+        Menu.addAction('Delete Selected Character...')        
+        Menu.exec_()
+    
+    
+    def on_LSV_PoseType_customContextMenuRequested(self, point):
+        Menu = QtGui.QMenu()
+        Menu.move(QtGui.QCursor.pos())
+        Menu.addAction('Add New Style...')
+        Menu.addSeparator()
+        Menu.addAction('Delete Selected Style...')
+        Menu.exec_()
+      
+         

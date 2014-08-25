@@ -6,7 +6,7 @@
 import re, os, poseLibrary.PoseLibEnv, inputDialog
 from utils import scriptTool, uiTool
 from PyQt4 import QtCore, QtGui
-reload(inputDialog)
+import maya.cmds as mc
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 #======================================================
 
@@ -217,15 +217,28 @@ class PoseLib(baseClass, windowClass):
         if args == None:return
         print 1
                 
+                
     def on_btn_apply_clicked(self, args=None):
         if args == None:return
-        print 2
-    
+        selectedIndexes = self.LSV_Pose.selectedIndexes()
+        if len(selectedIndexes) == 0:
+            return
+        fileName = self.__model_pose.data(selectedIndexes[0], QtCore.Qt.EditRole)
+        filePath = os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE, fileName)
+        print filePath      
+                
+                
                 
     def on_btn_create_clicked(self, args=None):
         if args == None:return
-        print 3
-
+        if not self.POSE_TYPE:
+            return
+        filePath = mc.fileDialog2(dir=os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE), ff="JSON Files (*.json)")
+        if not filePath:
+            return
+        print filePath[0]
+        
+        
 
     def on_btn_grabImage_clicked(self, args=None):
         if args == None:return
@@ -235,13 +248,17 @@ class PoseLib(baseClass, windowClass):
         os.popen(snapShotPath)
                 
                 
+                
     def on_btn_addStar_clicked(self, args=None):
         if args == None:return
         print 5
+        
+        
                 
     def on_btn_delete_clicked(self, args=None):
         if args == None:return
         print 6  
+    
     
     
     def on_LSV_Character_customContextMenuRequested(self, point):

@@ -225,8 +225,7 @@ class PoseLib(baseClass, windowClass):
             return
         
         #- apply pose..
-        fileName = self.__model_pose.data(selectedIndexes[0], QtCore.Qt.EditRole)
-        filePath =  fileName
+        filePath = self.__model_pose.data(selectedIndexes[0], QtCore.Qt.EditRole)
         poseLibrary.core.KeyData.setKeyByDatas(poseLibrary.core.KeyData.readData(filePath))
                 
                 

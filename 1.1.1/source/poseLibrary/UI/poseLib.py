@@ -3,7 +3,7 @@
 #   mail: zclongpop@163.com
 #   date: Fri, 15 Aug 2014 09:59:45
 #========================================
-import re, os, poseLibrary.PoseLibEnv, inputDialog, poseLibrary.core.KeyData
+import re, os, shutil, poseLibrary.PoseLibEnv, inputDialog, poseLibrary.core.KeyData
 from utils import scriptTool, uiTool
 from PyQt4 import QtCore, QtGui
 import maya.cmds as mc
@@ -159,6 +159,7 @@ class PoseLib(baseClass, windowClass):
         charcters = [d for d in os.listdir(self.ROOT_PATH) if os.path.isdir(d)]
         #-
         self.__model_character.changeData(charcters)
+        self.__model_poseType.changeData([])
         self.__model_pose.clear()
         #-
         os.chdir(os.environ['TMP'])
@@ -306,7 +307,8 @@ class PoseLib(baseClass, windowClass):
         ui = inputDialog.InputDialog(self.ROOT_PATH)
         ui.comboBox.setModel(self.__model_character)
         ui.exec_()
-    
+        #-
+        self.on_btn_refreshCharacters_clicked(True)
     
     def deleteCharacter(self):
         selectIndexes = self.LSV_Character.selectedIndexes()
@@ -318,7 +320,9 @@ class PoseLib(baseClass, windowClass):
 
         for index in selectIndexes:
             name = self.__model_character.getData(index)
-            os.removedirs(os.path.join(self.ROOT_PATH, name))
+            shutil.rmtree(os.path.join(self.ROOT_PATH, name))
+        #-
+        self.on_btn_refreshCharacters_clicked(True)
     
     
     def addStyle(self):
@@ -326,7 +330,9 @@ class PoseLib(baseClass, windowClass):
         ui = inputDialog.InputDialog(os.path.join(self.ROOT_PATH, self.CHARACTER))
         ui.comboBox.setModel(self.__model_poseType)
         ui.exec_()
-        
+        #-
+        self.on_LSV_Character_clicked()
+
 
     def deleteStyle(self):
         selectIndexes = self.LSV_PoseType.selectedIndexes()
@@ -338,4 +344,6 @@ class PoseLib(baseClass, windowClass):
         
         for index in selectIndexes:
             name = self.__model_poseType.getData(index)
-            os.removedirs(os.path.join(self.ROOT_PATH, self.CHARACTER, name))        
+            shutil.rmtree(os.path.join(self.ROOT_PATH, self.CHARACTER, name))        
+        #-
+        self.on_LSV_Character_clicked()

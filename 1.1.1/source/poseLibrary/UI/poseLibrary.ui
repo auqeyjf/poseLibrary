@@ -58,6 +58,9 @@
           <height>50</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">QPushButton{
 	border:none;
@@ -193,6 +196,9 @@
             <height>35</height>
            </size>
           </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
 	border:none;
@@ -226,6 +232,9 @@
             <width>35</width>
             <height>35</height>
            </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
@@ -305,6 +314,9 @@
               <height>30</height>
              </size>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
 	border:none;
@@ -338,6 +350,9 @@
               <width>30</width>
               <height>30</height>
              </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
@@ -373,6 +388,9 @@
               <height>30</height>
              </size>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
 	border:none;
@@ -407,6 +425,9 @@
               <height>30</height>
              </size>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{
 	border:none;
@@ -440,6 +461,9 @@
               <width>30</width>
               <height>30</height>
              </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="layoutDirection">
              <enum>Qt::LeftToRight</enum>
@@ -477,6 +501,9 @@
               <width>30</width>
               <height>30</height>
              </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton{

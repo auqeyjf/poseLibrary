@@ -1,5 +1,14 @@
 <RCC>
   <qresource prefix="icon">
+    <file>icons/sync_hover.png</file>
+    <file>icons/apply_hover.png</file>
+    <file>icons/camera_hover.png</file>
+    <file>icons/create_hover.png</file>
+    <file>icons/delete_hover.png</file>
+    <file>icons/play_hover.png</file>
+    <file>icons/reload_hover.png</file>
+    <file>icons/setting_hover.png</file>
+    <file>icons/star_hover.png</file>
     <file>icons/play.png</file>
     <file>icons/apply.png</file>
     <file>icons/star.png</file>

@@ -10,8 +10,8 @@ import maya.cmds as mc
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 #======================================================
 
-SCRIPT_PATH = scriptTool.getScriptPath()
-
+SCRIPT_PATH  = scriptTool.getScriptPath()
+IMAGE_FORMAT = ('.png', '.jpg', '.jpeg', '.bmp')
 #======================================================
 
 class ListModel(QtCore.QAbstractListModel):
@@ -110,7 +110,7 @@ class PoseDelegate(QtGui.QItemDelegate):
         imagePath = os.path.join(SCRIPT_PATH, 'icons', 'file_image.png').replace('\\', '/')
         
         data =  self.parentModel.data(index, QtCore.Qt.EditRole)
-        for imgExt in ('.png', '.jpg', '.jpeg', '.bmp'):
+        for imgExt in IMAGE_FORMAT:
             image = os.path.splitext(data)[0] + imgExt
             if os.path.isfile(image):
                 image = image.replace('\\', '/')
@@ -154,52 +154,52 @@ class PoseLib(baseClass, windowClass):
 
     def on_btn_refreshCharacters_clicked(self, args=None):
         if args == None:return
-        os.chdir(self.ROOT_PATH)
-        #-
-        charcters = [d for d in os.listdir(self.ROOT_PATH) if os.path.isdir(d)]
-        #-
+        #- get character folders..
+        charcters = [d for d in os.listdir(self.ROOT_PATH) if os.path.isdir(os.path.join(self.ROOT_PATH, d))]
+        #- add character to model..
         self.__model_character.changeData(charcters)
         self.__model_poseType.changeData([])
         self.__model_pose.clear()
-        #-
-        os.chdir(os.environ['TMP'])
+
 
 
     def on_LSV_Character_clicked(self):
         selectedChara = self.LSV_Character.selectedIndexes()
         if selectedChara == []:
             return
+        #- get selected character..
         self.CHARACTER =  self.__model_character.getData(selectedChara[0])
-        #-
+        
+        #- get character's poses..
         path = os.path.join(self.ROOT_PATH, self.CHARACTER)
-        os.chdir(path)
-        poseTypes = [d for d in os.listdir(path) if os.path.isdir(d)]
-        #-
+        poseTypes = [d for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
+        
+        #- change chracter pose styles..
         self.__model_poseType.changeData(poseTypes)
         self.__model_pose.clear()
-        #-
-        os.chdir(os.environ['TMP'])
 
 
     def on_LSV_PoseType_clicked(self):
         selectedPosetype = self.LSV_PoseType.selectedIndexes()
         if selectedPosetype == []:
             return
+        
+        #- get character selected pose style..
         self.POSE_TYPE = self.__model_poseType.getData(selectedPosetype[0])
         
-        #-
+        #- get character's poses..
         posePath = os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE)
-        #-
-        os.chdir(posePath)
         poseFiles = [f for f in os.listdir(posePath) if re.search('json$', f)]
-        #-
+        
+        #- change pose model..
         self.__model_pose.clear()
         self.__model_pose.updateData(poseFiles)
         
-        #- set row height
+        #- set row height...
         for i in range(self.__model_pose.rowCount()):
             self.LSV_Pose.setRowHeight(i, 134)
         
+        #- open delegate
         for row in range(self.__model_pose.rowCount()):
             for column in range(3):
                 index = self.__model_pose.index(row, column)
@@ -207,8 +207,6 @@ class PoseLib(baseClass, windowClass):
                 if data == None:
                     continue
                 self.LSV_Pose.openPersistentEditor(index)
-        #-
-        os.chdir(os.environ['TMP'])
         
         
     #=================================================================================    
@@ -221,9 +219,12 @@ class PoseLib(baseClass, windowClass):
                 
     def on_btn_apply_clicked(self, args=None):
         if args == None:return
+        #- get selected first one pose..
         selectedIndexes = self.LSV_Pose.selectedIndexes()
         if len(selectedIndexes) == 0:
             return
+        
+        #- apply pose..
         fileName = self.__model_pose.data(selectedIndexes[0], QtCore.Qt.EditRole)
         filePath = os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE, fileName)
         poseLibrary.core.KeyData.setKeyByDatas(poseLibrary.core.KeyData.readData(filePath))
@@ -232,11 +233,16 @@ class PoseLib(baseClass, windowClass):
                 
     def on_btn_create_clicked(self, args=None):
         if args == None:return
+        #- get select style..
         if not self.POSE_TYPE:
             return
+        
+        #- build file path..
         filePath = mc.fileDialog2(dir=os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE), ff="JSON Files (*.json)")
         if not filePath:
             return
+        
+        #- export data..
         poseLibrary.core.KeyData.exportKeysBySelect(filePath[0])
         
         
@@ -263,10 +269,13 @@ class PoseLib(baseClass, windowClass):
         #-
         selectedIndexes = self.LSV_Pose.selectedIndexes()
         for index in selectedIndexes:
+            #- remove json files..
             fileName = self.__model_pose.data(index, QtCore.Qt.EditRole)
             filePath = os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE, fileName)
             os.remove(filePath)
-            for imgExt in ('.png', '.jpg', '.jpeg', '.bmp'):
+            
+            #- remove image files..
+            for imgExt in IMAGE_FORMAT:
                 imagePath = os.path.splitext(filePath)[0] + imgExt
                 if os.path.isfile(imagePath):
                     os.remove(imagePath)

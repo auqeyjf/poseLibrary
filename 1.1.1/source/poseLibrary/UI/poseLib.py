@@ -189,7 +189,7 @@ class PoseLib(baseClass, windowClass):
         
         #- get character's poses..
         posePath = os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE)
-        poseFiles = [f for f in os.listdir(posePath) if re.search('json$', f)]
+        poseFiles = [os.path.join(posePath, f) for f in os.listdir(posePath) if re.search('json$', f)]
         
         #- change pose model..
         self.__model_pose.clear()
@@ -226,7 +226,7 @@ class PoseLib(baseClass, windowClass):
         
         #- apply pose..
         fileName = self.__model_pose.data(selectedIndexes[0], QtCore.Qt.EditRole)
-        filePath = os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE, fileName)
+        filePath =  fileName
         poseLibrary.core.KeyData.setKeyByDatas(poseLibrary.core.KeyData.readData(filePath))
                 
                 

@@ -3,7 +3,7 @@
 #   mail: zclongpop@163.com
 #   date: Mon, 25 Aug 2014 09:24:18
 #========================================
-import os.path, json
+import os.path, json, re
 import maya.cmds as mc
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
 
@@ -13,7 +13,7 @@ def getKeyByObject(obj):
     #- object exists ?
     if not mc.objExists(obj):
         return data
-    data['object'] = obj
+    data['object'] = re.search('\w+$', obj).group()
     
     #- object has attributes ?
     attributes = mc.listAttr(obj, k=True)

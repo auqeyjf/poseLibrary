@@ -122,3 +122,4 @@ def exportKeysBySelect(filePath):
     
     data = getKeyByObjects(sel)
     writeData(data, filePath)
+    print 'Data exported to : %s'%filePath

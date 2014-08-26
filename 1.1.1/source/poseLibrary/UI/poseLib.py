@@ -257,8 +257,20 @@ class PoseLib(baseClass, windowClass):
                 
     def on_btn_delete_clicked(self, args=None):
         if args == None:return
-        print 6  
-    
+        if not uiTool.warning('Delete selected Poses. \ncontinue? ? ?', 'w'):
+            return 
+        #-
+        selectedIndexes = self.LSV_Pose.selectedIndexes()
+        for index in selectedIndexes:
+            fileName = self.__model_pose.data(index, QtCore.Qt.EditRole)
+            filePath = os.path.join(self.ROOT_PATH, self.CHARACTER, self.POSE_TYPE, fileName)
+            os.remove(filePath)
+            for imgExt in ('.png', '.jpg', '.jpeg', '.bmp'):
+                imagePath = os.path.splitext(filePath)[0] + imgExt
+                if os.path.isfile(imagePath):
+                    os.remove(imagePath)
+        #-
+        self.on_LSV_PoseType_clicked()
     
     
     def on_LSV_Character_customContextMenuRequested(self, point):

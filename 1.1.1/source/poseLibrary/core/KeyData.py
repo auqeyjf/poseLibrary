@@ -6,6 +6,13 @@
 import os.path, json, re
 import maya.cmds as mc
 #--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+def getObjectReferencedName(namespace, obj):
+    objects = ' '.join(mc.ls())
+    res = re.search('%s\S+%s'%(namespace, obj), objects)
+    if res:
+        return res.group()
+    return obj
+
 
 def getKeyByObject(obj):
     data = dict()
@@ -38,7 +45,7 @@ def getKeyByObject(obj):
 
 
 
-def setKeyByData(data):
+def setKeyByData(namespace, data):
     #- data format not right..
     if not isinstance(data, dict):
         return
@@ -48,7 +55,7 @@ def setKeyByData(data):
         return
     
     #- object not exists..
-    obj = data.get('object', '*')
+    obj = getObjectReferencedName(namespace, data.get('object', '*'))
     if not mc.objExists(obj):
         return
     
@@ -83,12 +90,12 @@ def getKeyByObjects(objects):
 
 
 
-def setKeyByDatas(datas):
+def setKeyByDatas(namespace, datas):
     if not isinstance(datas, (list, tuple)):
         return
     
     for data in datas:
-        setKeyByData(data)
+        setKeyByData(namespace, data)
 
 
 

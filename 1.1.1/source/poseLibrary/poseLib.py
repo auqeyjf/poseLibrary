@@ -240,7 +240,7 @@ class PoseLib(baseClass, windowClass):
         
         #- apply pose..
         filePath = self.__model_pose.data(selectedIndexes[0], QtCore.Qt.EditRole)
-        core.KeyData.setKeyByDatas(core.KeyData.readData(filePath))
+        core.KeyData.setKeyByDatas(str(self.CBX_NameSpace.currentText()), core.KeyData.readData(filePath))
                 
                 
                 

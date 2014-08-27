@@ -39,7 +39,11 @@ class ListModel(QtCore.QAbstractListModel):
     def getData(self, index):
         return self.data(index, QtCore.Qt.DisplayRole)
     
-
+    def searchData(self, text):
+        for i, t in enumerate(self.__data):
+            if re.match(text, t):
+                return self.index(i, 0)
+        return None
 
 class TableModel(QtCore.QAbstractTableModel):
     def __init__(self, parent=None):
@@ -162,7 +166,14 @@ class PoseLib(baseClass, windowClass):
         self.__model_pose.clear()
 
 
-
+    def on_LET_Search_editingFinished(self):
+        text = str(self.LET_Search.text())
+        index = self.__model_character.searchData(text)
+        if not index:
+            return
+        self.LSV_Character.setCurrentIndex(index)
+        
+        
     def on_LSV_Character_clicked(self):
         selectedChara = self.LSV_Character.selectedIndexes()
         if selectedChara == []:

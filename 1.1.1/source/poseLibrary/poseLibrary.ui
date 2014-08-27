@@ -70,7 +70,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="poseLibrary.qrc">
+         <iconset resource="poseLibrary.poseLibrary.qrc">
           <normaloff>:/icon/icons/bgi.png</normaloff>:/icon/icons/bgi.png</iconset>
         </property>
         <property name="iconSize">
@@ -142,7 +142,7 @@
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="poseLibrary.qrc">
+         <iconset resource="poseLibrary.poseLibrary.qrc">
           <normaloff>:/icon/icons/reload.png</normaloff>:/icon/icons/reload.png</iconset>
         </property>
         <property name="iconSize">
@@ -208,7 +208,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="poseLibrary.qrc">
+           <iconset resource="poseLibrary.poseLibrary.qrc">
             <normaloff>:/icon/icons/sync.png</normaloff>:/icon/icons/sync.png</iconset>
           </property>
           <property name="iconSize">
@@ -245,7 +245,7 @@
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="poseLibrary.qrc">
+           <iconset resource="poseLibrary.poseLibrary.qrc">
             <normaloff>:/icon/icons/setting.png</normaloff>:/icon/icons/setting.png</iconset>
           </property>
           <property name="iconSize">
@@ -326,7 +326,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="poseLibrary.qrc">
+             <iconset resource="poseLibrary.poseLibrary.qrc">
               <normaloff>:/icon/icons/play.png</normaloff>:/icon/icons/play.png</iconset>
             </property>
             <property name="iconSize">
@@ -363,7 +363,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="poseLibrary.qrc">
+             <iconset resource="poseLibrary.poseLibrary.qrc">
               <normaloff>:/icon/icons/apply.png</normaloff>:/icon/icons/apply.png</iconset>
             </property>
             <property name="iconSize">
@@ -400,7 +400,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="poseLibrary.qrc">
+             <iconset resource="poseLibrary.poseLibrary.qrc">
               <normaloff>:/icon/icons/create.png</normaloff>:/icon/icons/create.png</iconset>
             </property>
             <property name="iconSize">
@@ -437,7 +437,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="poseLibrary.qrc">
+             <iconset resource="poseLibrary.poseLibrary.qrc">
               <normaloff>:/icon/icons/camera.png</normaloff>:/icon/icons/camera.png</iconset>
             </property>
             <property name="iconSize">
@@ -477,7 +477,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="poseLibrary.qrc">
+             <iconset resource="poseLibrary.poseLibrary.qrc">
               <normaloff>:/icon/icons/star.png</normaloff>:/icon/icons/star.png</iconset>
             </property>
             <property name="iconSize">
@@ -514,7 +514,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="poseLibrary.qrc">
+             <iconset resource="poseLibrary.poseLibrary.qrc">
               <normaloff>:/icon/icons/delete.png</normaloff>:/icon/icons/delete.png</iconset>
             </property>
             <property name="iconSize">
@@ -536,7 +536,7 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="poseLibrary.qrc"/>
+  <include location="poseLibrary.poseLibrary.qrc"/>
  </resources>
  <connections/>
 </ui>

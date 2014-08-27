@@ -55,7 +55,7 @@ def setKeyByData(namespace, data):
         return
     
     #- object not exists..
-    obj = getObjectReferencedName(namespace, data.get('object', '*'))
+    obj = getObjectReferencedName(namespace, data.get('object', '"'))
     if not mc.objExists(obj):
         return
     

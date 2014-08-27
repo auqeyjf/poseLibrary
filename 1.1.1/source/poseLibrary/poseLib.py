@@ -3,7 +3,7 @@
 #   mail: zclongpop@163.com
 #   date: Fri, 15 Aug 2014 09:59:45
 #========================================
-import re, os, shutil, poseLibrary.PoseLibEnv, inputDialog, poseLibrary.core.KeyData
+import re, os, shutil, PoseLibEnv, inputDialog, core.KeyData
 from utils import scriptTool, uiTool
 from PyQt4 import QtCore, QtGui
 import maya.cmds as mc
@@ -124,7 +124,7 @@ class PoseDelegate(QtGui.QItemDelegate):
 baseClass, windowClass = uiTool.loadUi(os.path.join(SCRIPT_PATH, 'poseLibrary.ui'))
 class PoseLib(baseClass, windowClass):
     
-    ROOT_PATH = poseLibrary.PoseLibEnv.ROOT_CHARACTER_PATH
+    ROOT_PATH = PoseLibEnv.ROOT_CHARACTER_PATH
     CHARACTER = None
     POSE_TYPE = None
     
@@ -226,7 +226,7 @@ class PoseLib(baseClass, windowClass):
         
         #- apply pose..
         filePath = self.__model_pose.data(selectedIndexes[0], QtCore.Qt.EditRole)
-        poseLibrary.core.KeyData.setKeyByDatas(poseLibrary.core.KeyData.readData(filePath))
+        core.KeyData.setKeyByDatas(core.KeyData.readData(filePath))
                 
                 
                 
@@ -242,13 +242,13 @@ class PoseLib(baseClass, windowClass):
             return
         
         #- export data..
-        poseLibrary.core.KeyData.exportKeysBySelect(filePath[0])
+        core.KeyData.exportKeysBySelect(filePath[0])
         
         
 
     def on_btn_grabImage_clicked(self, args=None):
         if args == None:return
-        snapShotPath = os.path.join(os.path.dirname(SCRIPT_PATH), 'plug_in', 'SogouSnapShot.exe')
+        snapShotPath = os.path.join(SCRIPT_PATH, 'plug_in', 'SogouSnapShot.exe')
         if not os.path.isfile(snapShotPath):
             return 
         os.popen(snapShotPath)

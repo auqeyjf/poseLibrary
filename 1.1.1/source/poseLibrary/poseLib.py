@@ -164,7 +164,10 @@ class PoseLib(baseClass, windowClass):
         self.__model_character.changeData(charcters)
         self.__model_poseType.changeData([])
         self.__model_pose.clear()
-
+        #- get refrences..
+        self.CBX_NameSpace.clear()
+        nameSpaces = [mc.file(f, q=True, ns=True) for f in mc.file(q=True, r=True)]
+        self.CBX_NameSpace.addItems(nameSpaces)
 
     def on_LET_Search_editingFinished(self):
         text = str(self.LET_Search.text())

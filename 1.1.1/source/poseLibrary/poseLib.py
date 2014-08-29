@@ -330,6 +330,8 @@ class PoseLib(baseClass, windowClass):
         ui.comboBox.setModel(self.__model_character)
         ui.exec_()
         #-
+        if ui.result() == 0:
+            return
         self.on_btn_refreshCharacters_clicked(True)
     
     def deleteCharacter(self):
@@ -353,6 +355,8 @@ class PoseLib(baseClass, windowClass):
         ui.comboBox.setModel(self.__model_poseType)
         ui.exec_()
         #-
+        if ui.result() == 0:
+            return        
         self.on_LSV_Character_clicked()
 
 

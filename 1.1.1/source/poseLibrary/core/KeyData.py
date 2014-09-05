@@ -29,17 +29,18 @@ def getKeyByObject(obj):
     
     #- get keys
     for attr in attributes:
-        times     = mc.keyframe(obj,   at=attr, q=True,  tc=True)
-        values    = mc.keyframe(obj,   at=attr, q=True,  vc=True)
-        inAngles  = mc.keyTangent(obj, at=attr, q=True,  ia=True)
-        outAngles = mc.keyTangent(obj, at=attr, q=True,  oa=True)
-        
+        times      = mc.keyframe(obj,   at=attr, q=True,  tc=True)
+        values     = mc.keyframe(obj,   at=attr, q=True,  vc=True)
+        inAngles   = mc.keyTangent(obj, at=attr, q=True,  ia=True)
+        outAngles  = mc.keyTangent(obj, at=attr, q=True,  oa=True)
+        inWeights  = mc.keyTangent(obj, at=attr, q=True,  iw=True)
+        outWeights = mc.keyTangent(obj, at=attr, q=True,  ow=True)
         #- keys not found..
         if not times:
             continue
         
         #- save data..
-        data.setdefault('keyData', {})[attr] = zip(times, values, inAngles, outAngles)
+        data.setdefault('keyData', {})[attr] = zip(times, values, inAngles, inWeights, outAngles, outWeights)
     
     return data
 
@@ -64,12 +65,12 @@ def setKeyByData(namespace, data):
         #- testing attribute..
         
         #- key it
-        for tm, va, ia, oa in keydata:
+        for tm_V, va_V, ia_V, iw_V, oa_V, ow_V in keydata:
             #- set key
-            mc.setKeyframe(obj, at=attr, t=tm, v=va)
+            mc.setKeyframe(obj, at=attr, t=tm_V, v=va_V)
             #- fix curve
             mc.keyTangent('%s.%s'%(obj, attr), l=False)
-            mc.keyTangent(obj, e=True, at=attr, a=True, t=(tm, tm), ia=ia, oa=oa)
+            mc.keyTangent(obj, e=True, at=attr, a=True, t=(tm_V, tm_V), ia=ia_V, iw=iw_V, oa=oa_V, ow=ow_V)
             mc.keyTangent('%s.%s'%(obj, attr), l=True)
 
 
